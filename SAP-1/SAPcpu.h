@@ -138,6 +138,18 @@ private: /// Consts and funcs
 		PC++;
 		out();
 	}
+	void SUB()
+	{
+		busC();
+		loadMAR();
+		busRAM();
+		loadB();
+		ALU = rega - regb;
+		busALU();
+		loadA();
+		PC++;
+		out();
+	}
 	void LDA()
 	{
 		busC();
@@ -242,6 +254,10 @@ public:
 				else if (((regc & 0b11110000) >> 4)== 0b1)
 				{
 					ADD();
+				}
+				else if (((regc & 0b11110000) >> 4) == 0b10)
+				{
+					SUB();
 				}
 				else if (((regc & 0b11110000) >> 4) == 0b1110)
 				{
