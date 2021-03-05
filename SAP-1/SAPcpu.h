@@ -6,10 +6,15 @@
 #include <iterator> 
 #include <map>
 #include <bitset>
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
+#endif
 #include "ssdisp.h" // Output display
 
-HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+// HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 void throwError(std::string e);
 
 class SAPcpu
@@ -234,7 +239,7 @@ public:
 				out();
 				std::getline(code, exec);	
 				parse();
-				Sleep(1000 / clockrate);
+				sleep(1000 / clockrate);
 			}
 			PC = 0;
 			out();
@@ -267,7 +272,7 @@ public:
 				{
 					HLT();
 				}
-				Sleep(1000 / clockrate);
+				sleep(1000 / clockrate);
 			}
 			out();
 		}
@@ -282,7 +287,7 @@ public:
 
 	void out()
 	{
-		system("cls");
+		system("clear");
 		outDisp();
 		std::cout << "\nReg A:\n";
 		outRegA();
@@ -378,7 +383,7 @@ public:
 
 void throwError(std::string e)
 {
-	SetConsoleTextAttribute(hConsole, 12);
+	//SetConsoleTextAttribute(hConsole, 12);
 	std::cout << e << "\n";
-	SetConsoleTextAttribute(hConsole, 15);
+	//SetConsoleTextAttribute(hConsole, 15);
 }
