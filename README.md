@@ -40,7 +40,11 @@ The RAM is a 16 word, 8 bit array. In other words, you can store up to 16 8 bit 
 ------
 ### `.sap` files
 
-Traditionally, SAP-1 is programmed by hand, by changing the address the MAR is pointing to and manually loading the instruction into the RAM. To speed up this rather tedious process, this modivied version of the SAP-1 emulator reads its instructions from a file. `.sap` file is an ordinary text file with a changed extension, so it'll still work if you feed it a `.txt`.
+Traditionally, SAP-1 is programmed by hand, by changing the address the MAR is pointing to and manually loading the instruction into the RAM. To speed up this rather tedious process, this modified version of the SAP-1 emulator reads its instructions from a file.
+
+For SAP-1.cpp a `.sap` file is an ordinary text file with a changed extension, so it'll still work if you feed it a `.txt`.
+
+For SAP-Args.cpp a file ending in `.sap` must be provided.
 
 ------
 #### A sample program
@@ -84,8 +88,12 @@ SAPcpu::bool bin;
 ```
 the program may output in binary or hex.	
 
-### SAP-1.cpp
+### SAP-1.cpp & SAP-Args.cpp
 
 SAP-1.cpp is an example program that uses a console interface with custom commands to control the emulator. By default, the CPU is pointing to a default `samlpeProgram.sap` example program. Typing `RUN` in the console will execute any loaded `.sap` file.
+
+SAP-Args.cpp must take a `.sap` file argument with `-x [FILE NAME.sap]. It does not initialise a default file otherwise.
+
+SAP-Args.cpp must also know what base the registers should be printed in, which is supplied with -b2 or -b16 for binary or hexadecimal respectively.
 
 For additional commans, run `HELP` in the console.
