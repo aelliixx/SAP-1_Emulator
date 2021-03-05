@@ -92,8 +92,11 @@ the program may output in binary or hex.
 
 SAP-1.cpp is an example program that uses a console interface with custom commands to control the emulator. By default, the CPU is pointing to a default `samlpeProgram.sap` example program. Typing `RUN` in the console will execute any loaded `.sap` file.
 
+SAP-1.cpp only works on windows, SAP-Args only works on Linux.
+
 SAP-Args.cpp must take a `.sap` file argument with `-x [FILE NAME.sap]. It does not initialise a default file otherwise.
 
 SAP-Args.cpp must also know what base the registers should be printed in, which is supplied with -b2 or -b16 for binary or hexadecimal respectively.
 
-For additional commans, run `HELP` in the console.
+
+For additional commans, run `HELP` in the console or `-h` if using SAP-Args.cpp.
