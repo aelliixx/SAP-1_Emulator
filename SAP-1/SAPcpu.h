@@ -43,6 +43,9 @@ private: /// Variables
 
 	bool haltFlag	= false;
 
+	std::string state = "null";
+	std::string op = "null";
+
 
 private: /// Consts and funcs
 
@@ -84,50 +87,74 @@ private: /// Consts and funcs
 	void loadWBUS(uint8_t _arg)
 	{
 		wbus = _arg;
+		state = "Loading WBUS";
+		out();
 	}
 	void busPC()
 	{
 		wbus = PC;
+		state = "Loading PC to bus";
+		out();
 	}
 	void loadMAR()
 	{
 		MAR = wbus & 0b1111;
+		state = "Loading MAR";
+		out();
 	}
 	void loadRAM()
 	{
 		RAM[MAR & 0b1111] = wbus;
+		state = "Loading RAM";
+		out();
 	}
 	void busRAM()
 	{
 		wbus = RAM[MAR & 0b1111];
+		state = "Loading RAM to bus";
+		out();
 	}
 	void loadA()
 	{
 		rega = wbus;
+		state = "Loading reg A";
+		out();
 	}
 	void busA()
 	{
 		wbus = rega;
+		state = "Loading reg A to bus";
+		out();
 	}
 	void loadB()
 	{
 		regb = wbus;
+		state = "Loading reg B";
+		out();
 	}
 	void loadC()
 	{
 		regc = wbus;
+		state = "Loading reg C";
+		out();
 	}
 	void busC()
 	{
 		wbus = regc & 0b1111;
+		state = "Loading reg C to bus";
+		out();
 	}
 	void busALU()
 	{
 		wbus = ALU;
+		state = "Loading ALU to bus";
+		out();
 	}
 	void loadDISP()
 	{
 		DISP = wbus;
+		state = "Loading reg DISP";
+		out();
 	}
 
 	// Instruction set
@@ -141,6 +168,7 @@ private: /// Consts and funcs
 		busALU();
 		loadA();
 		PC++;
+		op = "ADD " + std::to_string(regb);
 		out();
 	}
 	void SUB()
@@ -153,6 +181,7 @@ private: /// Consts and funcs
 		busALU();
 		loadA();
 		PC++;
+		op = "SUB " + std::to_string(regb);
 		out();
 	}
 	void LDA()
@@ -162,6 +191,7 @@ private: /// Consts and funcs
 		busRAM();
 		loadA();
 		PC++;
+		op = "LDA " + std::to_string(rega);
 		out();
 	}
 	void OUTPUT()
@@ -169,12 +199,15 @@ private: /// Consts and funcs
 		busA();
 		loadDISP();
 		PC++;
+		op = "OUT";
 		out();
 	}
 	void HLT()
 	{
 		haltFlag = true;
 		PC++;
+		op = "HLT";
+		out();
 	}
 
 public:
@@ -236,6 +269,7 @@ public:
 			PC = 0;
 			while (!code.eof()) // Autoparse
 			{
+				state = "Parsing";
 				out();
 				std::getline(code, exec);	
 				parse();
@@ -274,6 +308,7 @@ public:
 				}
 				sleep(1000 / clockrate);
 			}
+			state = "Halted";
 			out();
 		}
 		else
@@ -303,6 +338,10 @@ public:
 		outPC();
 		std::cout << "RAM:\n";
 		outRAM();
+		std::cout << "\nState: ";
+		outState();
+		std::cout << "Mnemonic: ";
+		outMnemonic();
 	}
 
 	void outRegA()
@@ -362,6 +401,15 @@ public:
 					std::cout << '\n';
 			}
 		}
+	}
+
+	void outState()
+	{
+		std::cout << state << '\n';
+	}
+	void outMnemonic()
+	{
+		std::cout << op << '\n';
 	}
 
 	void outPC()

@@ -37,22 +37,30 @@ int main(int argc, char *argv[])
 
 		std::cout << "SAP-1 emulator:\n";
 
+		flg = flag("-c", argv, argc);
+		if (flg!=-1 && argv[flg+1] > 0)
+		{
+			A.setClockrate(atoi(argv[flg+1]));
+		}
 		flg = flag("-b2", argv, argc);
 		if (flg!=-1)
 		{
 			A.bin = true;
-			A.openFile(file);
-			A.run();
+			goto RUN;
 		}
 		flg = flag("-b16", argv, argc);
 		if (flg!=-1)
 		{
 			A.bin = false;
-			A.openFile(file);
-			A.run();
+			goto RUN;
 		}
 		else if (flg=-1)
 			std::cout << "Invalid base. Quitting.\n";
+
+		RUN:
+
+		A.openFile(file);
+			A.run();
 	}
 
 	flg = flag("-h", argv, argc);

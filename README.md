@@ -21,8 +21,8 @@ The modified SAP-1 emulator contains all off the original instructions, their re
 | -------- | -------- | ---------------- | ----------- |
 | MOV      | `0b11`   | `MEM ADDR` & `VALUE` | Stores `VALUE` in the RAM at the address `MEM ADDR`. |
 | LDA      | `0b0`    | `MEM ADDR`           | Loads a value from the given address into the accumulator (Reg A) |
-| ADD      | `0b1`    | `MEM ADDR`           | Lodas a value from the given address into the register B, adds it to whatever is in the accumulator (Reg A) via the ALU and returns sum back into Reg A. |
-| SUM      | `0b10`   | `MEM ADDR`           | Lodas a value from the given address into the register B, subtracts it from whatever is in the accumulator (Reg A) via the ALU and returns value back into Reg A. |
+| ADD      | `0b1`    | `MEM ADDR`           | Loads a value from the given address into the register B, adds it to whatever is in the accumulator (Reg A) via the ALU and returns sum back into Reg A. |
+| SUB      | `0b10`   | `MEM ADDR`           | Loads a value from the given address into the register B, subtracts it from whatever is in the accumulator (Reg A) via the ALU and returns value back into Reg A. |
 | OUT      | `0b1110` | None                 | Displays whatever is in the accumulator (Reg A) via the 7 segment display emulator. |
 | HLT      | `0b1111` | None                 | Halts the clock and ends the program. Must be at the end of every `.sap` file, otherwise the rpogram counter will loop forever. |
 
